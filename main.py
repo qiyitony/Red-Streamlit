@@ -114,11 +114,12 @@ if check_password():
 
             # 设置邮件内容
             msg = MIMEMultipart()
-            content = st.text_area("Content")
+            content = st.text_area("Feedback to the patient",'Dear Patient \n Your heart health report has been successfully generated. Please find an attached report with the email.')
             msg.attach(MIMEText(content, 'plain', 'utf-8'))
 
             # 设置邮件主题
-            theme = st.text_input("Theme")
+            theme = st.text_input("Subject",'Check out your heart health prediction report!')
+
             msg['Subject'] = theme
 
             msg['From'] = msg_from
