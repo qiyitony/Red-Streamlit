@@ -100,7 +100,7 @@ if check_password():
         with st2:
             st.metric(label="Accuracy", value="89%")
         st.button('view the report')
-        st.button('Approve and share the report')
+        st.button('Approve and share the report',on_click=go_to_email_sending())
         st.button('Reject the report')
 
 
