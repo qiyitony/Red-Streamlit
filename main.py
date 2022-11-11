@@ -102,38 +102,38 @@ if check_password():
 
 
     def routing_three():
-        st.markdown("### Prediction Report")
+        st.markdown("### Sending Report")
         if 'count' not in st.session_state:
             st.session_state.count = 0
 
         msg_from = '1215139249@qq.com'
         passwd = 'wcedtcjsqjzabaeb'
-        with st.form("发邮件"):
-            receiver = st.text_input("请输入收件人邮箱地址")
+        with st.form("Sending email"):
+            receiver = st.text_input("Receiver")
             to = [receiver]
 
             # 设置邮件内容
             msg = MIMEMultipart()
-            content = st.text_area("请输入你要发送的邮件内容")
+            content = st.text_area("Content")
             msg.attach(MIMEText(content, 'plain', 'utf-8'))
 
             # 设置邮件主题
-            theme = st.text_input("请输入邮件主题")
+            theme = st.text_input("Theme")
             msg['Subject'] = theme
 
             msg['From'] = msg_from
 
             # 开始发送
-            submitted = st.form_submit_button("点我开始发送邮件")
+            submitted = st.form_submit_button("Send")
             if submitted:
                 st.session_state.count += 1
                 if st.session_state.count > 1:
-                    st.warning("你已经发送过了，请勿重复发送！")
+                    st.warning("Don't send too many email！")
                 else:
                     s = smtplib.SMTP_SSL("smtp.qq.com", 465)
                     s.login(msg_from, passwd)
                     s.sendmail(msg_from, to, msg.as_string())
-                    st.success("邮件发送成功！")
+                    st.success("Done！")
 
 
     with st.sidebar:
