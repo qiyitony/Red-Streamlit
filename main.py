@@ -150,7 +150,7 @@ if check_password():
         df = pd.read_csv('Patients.csv')
         st.table(df)
 
-        patient_id = st.selectbox('Choose Patient', [i[2] for i in df.values.tolist()])
+        patient_id = st.selectbox('Choose Patient', [i[2] for i in df.values.tolist(1)])
         st.session_state['patient_id'] = patient_id
         st.button("Input Features for Chosen Patient", on_click=go_to_input_features)
     else:
