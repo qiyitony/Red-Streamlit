@@ -158,6 +158,7 @@ if check_password():
             stx.TabBarItemData(id=0, title="Profile", description="Create Patient Profile"),
             stx.TabBarItemData(id=1, title="Features", description="Input Clinical Features"),
             stx.TabBarItemData(id=2, title="Prediction", description="Get prediction from AI model "),
+            stx.TabBarItemData(id=3,title="Sharing", description="Share email autonomously")
         ], default=st.session_state.step)
         step = int(step_str)
 
