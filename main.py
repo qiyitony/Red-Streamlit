@@ -109,7 +109,7 @@ if check_password():
         msg_from = '1215139249@qq.com'
         passwd = 'wcedtcjsqjzabaeb'
         with st.form("Sending email"):
-            receiver = st.text_input("Receiver")
+            receiver = st.text_input("Receiver",str(st.session_state.patient_id))
             to = [receiver]
 
             # 设置邮件内容
