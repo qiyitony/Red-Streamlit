@@ -30,7 +30,9 @@ if check_password():
         st.session_state.step = 1
     def go_to_prediction():
         st.session_state.step = 2
-    def go_to_prediction():
+    #def go_to_prediction():
+     #   st.session_state.step = 3
+    def go_to_email_sending():
         st.session_state.step = 3
 
 
@@ -103,39 +105,40 @@ if check_password():
 
 
     def routing_three():
-        st.markdown("### Sending Report")
-        if 'count' not in st.session_state:
-            st.session_state.count = 0
+        #def () -> None:
+            st.markdown("### Sending Report")
+            if 'count' not in st.session_state:
+                st.session_state.count = 0
 
-        msg_from = '1215139249@qq.com'
-        passwd = 'wcedtcjsqjzabaeb'
-        with st.form("Sending email"):
-            receiver = st.text_input("Receiver",str(st.session_state.patient_id))
-            to = [receiver]
+            msg_from = '1215139249@qq.com'
+            passwd = 'wcedtcjsqjzabaeb'
+            with st.form("Sending email"):
+                receiver = st.text_input("Receiver",str(st.session_state.patient_id))
+                to = [receiver]
 
-            # 设置邮件内容
-            msg = MIMEMultipart()
-            content = st.text_area("Feedback to the patient",'Dear Patient, \nYour heart health report has been successfully generated. Please find an attached report with the email. \nThank you!')
-            msg.attach(MIMEText(content, 'plain', 'utf-8'))
+                # 设置邮件内容
+                msg = MIMEMultipart()
+                content = st.text_area("Feedback to the patient",'Dear Patient, \nYour heart health report has been successfully generated. Please find an attached report with the email. \nThank you!')
+                msg.attach(MIMEText(content, 'plain', 'utf-8'))
 
-            # 设置邮件主题
-            theme = st.text_input("Subject",'Check out your heart health prediction report!')
+                # 设置邮件主题
+                theme = st.text_input("Subject",'Check out your heart health prediction report!')
 
-            msg['Subject'] = theme
+                msg['Subject'] = theme
 
-            msg['From'] = msg_from
+                msg['From'] = msg_from
 
-            # 开始发送
-            submitted = st.form_submit_button("Send")
-            if submitted:
-                st.session_state.count += 1
-                if st.session_state.count > 1:
-                    st.warning("Don't send too many email！")
-                else:
-                    s = smtplib.SMTP_SSL("smtp.qq.com", 465)
-                    s.login(msg_from, passwd)
-                    s.sendmail(msg_from, to, msg.as_string())
-                    st.success("Done！")
+                # 开始发送
+                submitted = st.form_submit_button("Send")
+                if submitted:
+                    st.session_state.count += 1
+                    if st.session_state.count > 1:
+                        st.warning("Don't send too many email！")
+                    else:
+                        s = smtplib.SMTP_SSL("smtp.qq.com", 465)
+                        s.login(msg_from, passwd)
+                        s.sendmail(msg_from, to, msg.as_string())
+                        st.success("Done！")
 
 
     with st.sidebar:
