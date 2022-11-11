@@ -106,8 +106,8 @@ if check_password():
         if 'count' not in st.session_state:
             st.session_state.count = 0
 
-        msg_from = 'hongtaoz@andrew.cmu.edu'
-        passwd = 'Zht980602!'
+        msg_from = '1215139249@qq.com'
+        passwd = 'wcedtcjsqjzabaeb'
         with st.form("发邮件"):
             receiver = st.text_input("请输入收件人邮箱地址")
             to = [receiver]
