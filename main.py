@@ -114,8 +114,8 @@ if check_password():
 
             # 设置邮件内容
             msg = MIMEMultipart()
-            conntent = st.text_area("请输入你要发送的邮件内容")
-            msg.attach(MIMEText(conntent, 'plain', 'utf-8'))
+            content = st.text_area("请输入你要发送的邮件内容")
+            msg.attach(MIMEText(content, 'plain', 'utf-8'))
 
             # 设置邮件主题
             theme = st.text_input("请输入邮件主题")
