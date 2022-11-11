@@ -30,6 +30,8 @@ if check_password():
         st.session_state.step = 1
     def go_to_prediction():
         st.session_state.step = 2
+    def go_to_prediction():
+        st.session_state.step = 3
 
     def routing_zero():
         def handle_patient_profile() -> None:
