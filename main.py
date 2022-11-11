@@ -33,6 +33,7 @@ if check_password():
     def go_to_prediction():
         st.session_state.step = 3
 
+
     def routing_zero():
         def handle_patient_profile() -> None:
             if not st.session_state.first_name:
@@ -97,7 +98,7 @@ if check_password():
         with st2:
             st.metric(label="Accuracy", value="89%")
         st.button('view the report')
-        st.button('Approve and share the report')
+        st.button('Approve and share the report',on_click= routing_three())
         st.button('Reject the report')
 
 
@@ -150,7 +151,7 @@ if check_password():
         df = pd.read_csv('Patients.csv')
         st.table(df)
 
-        patient_id = st.selectbox('Choose Patient', [i[2] for i in df.values.tolist(1)])
+        patient_id = st.selectbox('Choose Patient', [i[2] for i in df.values.tolist()])
         st.session_state['patient_id'] = patient_id
         st.button("Input Features for Chosen Patient", on_click=go_to_input_features)
     else:
