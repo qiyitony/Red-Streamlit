@@ -166,6 +166,8 @@ if check_password():
             routing_one()
         elif step == 2:
             routing_two()
+        elif step == 3:
+            routing_three()
 
 
 
