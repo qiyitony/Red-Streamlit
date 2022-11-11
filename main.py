@@ -3,6 +3,9 @@ import time
 import extra_streamlit_components as stx
 import streamlit as st
 import pandas as pd
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from PIL import Image
 from deploy import predict_hd
 
@@ -91,7 +94,44 @@ if check_password():
             st.metric(label="Probability", value="25%")
         with st2:
             st.metric(label="Accuracy", value="89%")
-        st.button('Share the report')
+        st.button('view the report')
+        st.button('Approve and share the report')
+        st.button('Reject the report')
+
+
+    def routing_three():
+        st.markdown("### Prediction Report")
+        if 'count' not in st.session_state:
+            st.session_state.count = 0
+
+        msg_from = 'hongtaoz@andrew.cmu.edu'
+        passwd = 'Zht980602!'
+        with st.form("发邮件"):
+            receiver = st.text_input("请输入收件人邮箱地址")
+            to = [receiver]
+
+            # 设置邮件内容
+            msg = MIMEMultipart()
+            conntent = st.text_area("请输入你要发送的邮件内容")
+            msg.attach(MIMEText(conntent, 'plain', 'utf-8'))
+
+            # 设置邮件主题
+            theme = st.text_input("请输入邮件主题")
+            msg['Subject'] = theme
+
+            msg['From'] = msg_from
+
+            # 开始发送
+            submitted = st.form_submit_button("点我开始发送邮件")
+            if submitted:
+                st.session_state.count += 1
+                if st.session_state.count > 1:
+                    st.warning("你已经发送过了，请勿重复发送！")
+                else:
+                    s = smtplib.SMTP_SSL("smtp.qq.com", 465)
+                    s.login(msg_from, passwd)
+                    s.sendmail(msg_from, to, msg.as_string())
+                    st.success("邮件发送成功！")
 
 
     with st.sidebar:
@@ -126,3 +166,7 @@ if check_password():
             routing_one()
         elif step == 2:
             routing_two()
+
+
+
+
