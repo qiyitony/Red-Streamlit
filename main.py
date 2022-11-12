@@ -6,7 +6,7 @@ import pandas as pd
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.text import MIMEImage
+from email.mime.image import MIMEImage
 from PIL import Image
 from deploy import predict_hd
 
