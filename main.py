@@ -6,6 +6,7 @@ import pandas as pd
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.text import MIMEImage
 from PIL import Image
 from deploy import predict_hd
 
@@ -121,12 +122,18 @@ if check_password():
                 content = st.text_area("Feedback to the patient",'Dear Patient, \nYour heart health report has been successfully generated. Please find an attached report with the email. \nThank you!')
                 msg.attach(MIMEText(content, 'plain', 'utf-8'))
 
+                # attachment open
+                image_data = open('test1.jpg', 'rb')
+                msg.attach(MIMEImage(image_data.read()))
+                image_data.close()
+
                 # 设置邮件主题
                 theme = st.text_input("Subject",'Check out your heart health prediction report!')
 
                 msg['Subject'] = theme
 
                 msg['From'] = msg_from
+
 
                 # 开始发送
                 submitted = st.form_submit_button("Send")
