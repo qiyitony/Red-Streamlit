@@ -10,8 +10,6 @@ from email.mime.image import MIMEImage
 from PIL import Image
 from deploy import predict_hd
 
-
-
 def check_password():
     def check_password():
         st.session_state["password_correct"] = True
@@ -28,19 +26,12 @@ def check_password():
 if check_password():
     def go_to_create_profile():
         st.session_state.step = 0
-
-
     def go_to_input_features():
         st.session_state.step = 1
-
-
     def go_to_prediction():
         st.session_state.step = 2
-
-
     def go_to_email_sending():
         st.session_state.step = 3
-
 
     def routing_zero():
         def handle_patient_profile() -> None:
@@ -72,9 +63,9 @@ if check_password():
         def handle_get_prediction() -> None:
             # interact with AI module
             result, accuracy, fig = predict_hd(st.session_state.age, st.session_state.gender, st.session_state.cpt \
-                                               , st.session_state.rbp, st.session_state.cho, st.session_state.fbs \
-                                               , st.session_state.ecg, st.session_state.mhr, st.session_state.ea \
-                                               , st.session_state.op, st.session_state.ss)
+                       , st.session_state.rbp, st.session_state.cho, st.session_state.fbs \
+                       , st.session_state.ecg, st.session_state.mhr, st.session_state.ea \
+                       , st.session_state.op, st.session_state.ss)
             if result == 1:
                 st.session_state['result'] = 'YES'
             else:
@@ -82,6 +73,7 @@ if check_password():
             st.session_state['accuracy'] = accuracy * 100
             st.session_state['fig'] = fig
             go_to_prediction()
+
 
         with st.form(key='IF'):
             st.selectbox('Gender', ['M', 'F'], key='gender')
@@ -104,13 +96,12 @@ if check_password():
         st1, st2 = st.columns(2)
         st.metric(label="Email", value=st.session_state.patient_id)
         with st1:
-            st.metric(label="Prediction Result", value=st.session_state.result,
-                      help='Yes: has HF, No: Does not have HF')
+            st.metric(label="Prediction Result", value=st.session_state.result, help='Yes: has HF, No: Does not have HF')
         with st2:
             st.metric(label="Accuracy", value=str(st.session_state.accuracy) + "%")
 
         st3, st4 = st.columns(2)
-        st.button('Approve', on_click=go_to_email_sending())
+        st.button('Approve')
         st.button('Reject')
 
         st.markdown('--- ---')
@@ -131,54 +122,52 @@ if check_password():
         st.markdown("- **MaxHR**: maximum heart rate achieved [Numeric value between 60 and 202]")
         st.markdown("- **ExerciseAngina**: exercise-induced angina [Y: Yes, N: No]")
         st.markdown("- **Oldpeak**: oldpeak = ST [Numeric value measured in depression]")
-        st.markdown(
-            "- **ST_Slope**: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]")
-
+        st.markdown("- **ST_Slope**: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]")
 
     def routing_three():
-        # def () -> None:
-        st.markdown("### Sending Report")
-        if 'count' not in st.session_state:
-            st.session_state.count = 0
+        #def () -> None:
+            st.markdown("### Sending Report")
+            if 'count' not in st.session_state:
+                st.session_state.count = 0
 
-        msg_from = '1215139249@qq.com'
-        passwd = 'wcedtcjsqjzabaeb'
-        with st.form("Sending email"):
-            receiver = st.text_input("Receiver", str(st.session_state.patient_id))
-            to = [receiver]
+            msg_from = '1215139249@qq.com'
+            passwd = 'wcedtcjsqjzabaeb'
+            with st.form("Sending email"):
+                receiver = st.text_input("Receiver",str(st.session_state.patient_id))
+                to = [receiver]
 
-            # 设置邮件内容
-            msg = MIMEMultipart()
-            content = st.text_area("Feedback to the patient",
-                                   'Dear Patient, \nYour heart health report has been successfully generated. Please find an attached report with the email. \nThank you!')
-            msg.attach(MIMEText(content, 'plain', 'utf-8'))
+                # 设置邮件内容
+                msg = MIMEMultipart()
+                content = st.text_area("Feedback to the patient",'Dear Patient, \nYour heart health report has been successfully generated. Please find an attached report with the email. \nThank you!')
+                msg.attach(MIMEText(content, 'plain', 'utf-8'))
 
-            # attachment open
-            image_data1 = open('test1.png', 'rb')
-            msg.attach(MIMEImage(image_data1.read()))
-            image_data1.close()
-            image_data2 = open('test1.png', 'rb')
-            msg.attach(MIMEImage(image_data2.read()))
-            image_data2.close()
+                # attachment open
+                image_data1 = open('test1.png', 'rb')
+                msg.attach(MIMEImage(image_data1.read()))
+                image_data1.close()
+                image_data2 = open('test1.png', 'rb')
+                msg.attach(MIMEImage(image_data2.read()))
+                image_data2.close()
 
-            # 设置邮件主题
-            theme = st.text_input("Subject", 'Check out your heart health prediction report!')
+                # 设置邮件主题
+                theme = st.text_input("Subject",'Check out your heart health prediction report!')
 
-            msg['Subject'] = theme
+                msg['Subject'] = theme
 
-            msg['From'] = msg_from
+                msg['From'] = msg_from
 
-            # 开始发送
-            submitted = st.form_submit_button("Send")
-            if submitted:
-                st.session_state.count += 1
-                if st.session_state.count > 1:
-                    st.warning("Don't send too many email！")
-                else:
-                    s = smtplib.SMTP_SSL("smtp.qq.com", 465)
-                    s.login(msg_from, passwd)
-                    s.sendmail(msg_from, to, msg.as_string())
-                    st.success("Done！")
+
+                # 开始发送
+                submitted = st.form_submit_button("Send")
+                if submitted:
+                    st.session_state.count += 1
+                    if st.session_state.count > 1:
+                        st.warning("Don't send too many email！")
+                    else:
+                        s = smtplib.SMTP_SSL("smtp.qq.com", 465)
+                        s.login(msg_from, passwd)
+                        s.sendmail(msg_from, to, msg.as_string())
+                        st.success("Done！")
 
 
     with st.sidebar:
