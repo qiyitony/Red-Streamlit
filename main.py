@@ -145,7 +145,7 @@ if check_password():
                 image_data1 = open('test1.png', 'rb')
                 msg.attach(MIMEImage(image_data1.read()))
                 image_data1.close()
-                image_data2 = open('test1.png', 'rb')
+                image_data2 = open('test2.png', 'rb')
                 msg.attach(MIMEImage(image_data2.read()))
                 image_data2.close()
 
