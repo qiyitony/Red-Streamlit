@@ -62,10 +62,10 @@ if check_password():
 
         def handle_get_prediction() -> None:
             # interact with AI module
-            result, accuracy, fig = predict_hd(st.session_state.age, st.session_state.gender, st.session_state.cpt \
-                       , st.session_state.rbp, st.session_state.cho, st.session_state.fbs \
-                       , st.session_state.ecg, st.session_state.mhr, st.session_state.ea \
-                       , st.session_state.op, st.session_state.ss)
+            result, accuracy, fig = predict_hd(st.session_state.age, st.session_state.gender, st.session_state.cpt
+                                               , st.session_state.rbp, st.session_state.cho, st.session_state.fbs
+                                               , st.session_state.ecg, st.session_state.mhr, st.session_state.ea
+                                               , st.session_state.op, st.session_state.ss)
             if result == 1:
                 st.session_state['result'] = 'YES'
             else:
@@ -100,8 +100,7 @@ if check_password():
         with st2:
             st.metric(label="Accuracy", value=str(st.session_state.accuracy) + "%")
 
-        st3, st4 = st.columns(2)
-        st.button('Approve')
+        st.button('Approve', on_click=go_to_email_sending)
         st.button('Reject')
 
         st.markdown('--- ---')
